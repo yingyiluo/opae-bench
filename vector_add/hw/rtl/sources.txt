@@ -1,0 +1,8 @@
+cci_mpf_vec_add.json
+
+C:../../../base/hw/rtl/base_sources.txt
+
++incdir+.
+add_n.vhd
+add_n_top.vhd
+cci_mpf_vec_add_afu.sv
