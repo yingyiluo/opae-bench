@@ -1,0 +1,10 @@
+cci_mpf_vec_edge.json
+
+C:../../../base/hw/rtl/base_sources.txt
+
++incdir+.
+grayscale.vhd
+sobel_filter.vhd
+edge_detect_top.vhd
+fifo.vhd
+cci_mpf_vec_edge_afu.sv

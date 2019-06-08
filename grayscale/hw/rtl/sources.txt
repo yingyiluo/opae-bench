@@ -1,0 +1,8 @@
+cci_mpf_vec_gray.json
+
+C:../../../base/hw/rtl/base_sources.txt
+
++incdir+.
+grayscale.vhd
+grayscale_top.vhd
+cci_mpf_vec_gray_afu.sv
