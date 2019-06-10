@@ -1,9 +1,10 @@
 library IEEE;
+library altera_mf;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
-use work.altera_mf_components.all;
+use altera_mf.altera_mf_components.all;
 
-entity Neural_top is
+entity Multi_top is
 port
 (
 	signal clock : in std_logic;
@@ -19,10 +20,10 @@ port
 	signal z_rd_addr : in std_logic_vector(5 downto 0);
 	signal z_dout : out std_logic_vector(31 downto 0)
 );
-end entity Neural_top;
+end entity Multi_top;
 
-architecture behavior of Neural_top is 
-	component Neural_net
+architecture behavior of Multi_top is 
+	component Matrix_multi
 	port
 	(
 		signal clock : in std_logic;
@@ -49,7 +50,7 @@ architecture behavior of Neural_top is
 	signal z_wr_en : std_logic;
 
 	begin
-		Neural_inst : Neural_net
+		Multi_inst : Matrix_multi
 		port map (
 			clock => clock,
 			reset => reset,
@@ -64,7 +65,6 @@ architecture behavior of Neural_top is
 			z_wr_en => z_wr_en
 		);
 
-
 		x_inst: component altsyncram
 		generic map (
 			operation_mode => "ROM",
@@ -72,7 +72,7 @@ architecture behavior of Neural_top is
 			width_byteena_a => 1,
 			widthad_a => 6,
 			numwords_a => 64,
-			init_file => "Neural_weight.mif",
+			init_file => "Matrix_x.mif",
 			init_file_layout => "PORT_A",
 			lpm_type => "altsyncram",
 			intended_device_family => "Arria 10",
@@ -96,8 +96,8 @@ architecture behavior of Neural_top is
 			width_a => 8,
 			width_byteena_a => 1,
 			widthad_a => 6,
-			numwords_a => 8,
-			init_file => "Input.mif",
+			numwords_a => 64,
+			init_file => "Matrix_y.mif",
 			init_file_layout => "PORT_A",
 			lpm_type => "altsyncram",
 			intended_device_family => "Arria 10",
@@ -119,11 +119,11 @@ architecture behavior of Neural_top is
 			width_a => 32,
 			width_byteena_a => 4,
 			widthad_a => 6,
-			numwords_a => 9,
+			numwords_a => 64,
 			width_b => 32,
 			width_byteena_b => 4,
 			widthad_b => 6,
-			numwords_b => 9,
+			numwords_b => 64,
 			lpm_type => "altsyncram",
 			intended_device_family => "Arria 10",
 			clock_enable_input_a => "BYPASS",
