@@ -15,27 +15,27 @@ int main(){
 //for(int i = 0; i < NumUnit; i++)
 //{
 char filename[15];
-sprintf_s(filename,"Matrix_x.txt");
+sprintf_s(filename,"Matrix_x.mif");
 ofstream f(filename);
-/*f << "DEPTH = "<<N<<";\n";
-f << "WIDTH = 16;\n";
+f << "DEPTH = "<<N<<";\n";
+f << "WIDTH = 8;\n";
 f << "ADDRESS_RADIX = HEX;\n";
 f << "DATA_RADIX = HEX;\n";
 f << "CONTENT\n";
-f << "BEGIN\n";*/
+f << "BEGIN\n";
 
 char filename1[15];
-sprintf_s(filename1,"Matrix_y.txt");
+sprintf_s(filename1,"Matrix_y.mif");
 ofstream f1(filename1);
-/*f1 << "DEPTH = "<<N<<";\n";
-f1 << "WIDTH = 16;\n";
+f1 << "DEPTH = "<<N<<";\n";
+f1 << "WIDTH = 8;\n";
 f1 << "ADDRESS_RADIX = HEX;\n";
 f1 << "DATA_RADIX = HEX;\n";
 f1 << "CONTENT\n";
-f1 << "BEGIN\n";*/
+f1 << "BEGIN\n";
 
 char filename2[15];
-sprintf_s(filename2,"Matrix_z.txt");
+sprintf_s(filename2,"Matrix_z.mif");
 ofstream f2(filename2);
 /*f2 << "DEPTH = "<<N<<";\n";
 f2 << "WIDTH = 32;\n";
@@ -70,9 +70,9 @@ for (int i =0; i < H; i++){
 	for(int j =0; j < W; j++){
 		
 	
-/*f  << (8*i + j)<< " : ";
+f  << (8*i + j)<< " : ";
 f1 << (8*i + j)<< " : ";
-f2 << (8*i + j)<< " : ";*/
+//f2 << (8*i + j)<< " : ";
 //for (int j = 0; j < 512; j++){
 //int val = rand();
 //int val1 = rand();
@@ -136,13 +136,13 @@ if (val == 14) f << "E";
 if (val == 15) f << "F";
 */
 //}
-f  << "\n";
-f1 << "\n";
+f  << ";\n";
+f1 << ";\n";
 f2 << "\n";
 }
 }
-/*f  << "END;";
+f  << "END;";
 f1 << "END;";
-f2 << "END;";*/
+//f2 << "END;";
 //}
 }

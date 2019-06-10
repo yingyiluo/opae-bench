@@ -17,29 +17,29 @@ int main() {
 	//for(int i = 0; i < NumUnit; i++)
 	//{
 	char filename[20];
-	sprintf_s(filename, "Neural_weight.txt");
+	sprintf_s(filename, "Neural_weight.mif");
 	ofstream f(filename);
-	/*f << "DEPTH = "<<N<<";\n";
-	f << "WIDTH = 16;\n";
+	f << "DEPTH = "<<N<<";\n";
+	f << "WIDTH = 8;\n";
 	f << "ADDRESS_RADIX = HEX;\n";
 	f << "DATA_RADIX = HEX;\n";
 	f << "CONTENT\n";
-	f << "BEGIN\n";*/
+	f << "BEGIN\n";
 
 	char filename1[15];
-	sprintf_s(filename1, "Input.txt");
+	sprintf_s(filename1, "Input.mif");
 	ofstream f1(filename1);
-	/*f1 << "DEPTH = "<<H<<";\n";
-	f1 << "WIDTH = 16;\n";
+	f1 << "DEPTH = "<<H<<";\n";
+	f1 << "WIDTH = 8;\n";
 	f1 << "ADDRESS_RADIX = HEX;\n";
 	f1 << "DATA_RADIX = HEX;\n";
 	f1 << "CONTENT\n";
-	f1 << "BEGIN\n";*/
+	f1 << "BEGIN\n";
 
 	char filename2[15];
-	sprintf_s(filename2, "Output.txt");
+	sprintf_s(filename2, "Output.mif");
 	ofstream f2(filename2);
-	/*f2 << "DEPTH = "<<H<<";\n";
+	/*f2 << "DEPTH = "<<(H+1)<<";\n";
 	f2 << "WIDTH = 32;\n";
 	f2 << "ADDRESS_RADIX = HEX;\n";
 	f2 << "DATA_RADIX = HEX;\n";
@@ -84,9 +84,9 @@ int main() {
 			for (int j = 0; j < W; j++) {
 
 
-				/*f  << (8*i + j)<< " : ";
-				f1 << (8*i + j)<< " : ";
-				f2 << (8*i + j)<< " : ";*/
+				f  << (8*i + j)<< " : ";
+				
+				
 				//for (int j = 0; j < 512; j++){
 				//int val = rand();
 				//int val1 = rand();
@@ -98,11 +98,13 @@ int main() {
 				else {
 					f << std::hex << array_X[i][j];
 				}
-				f << "\n";
+				f << ";\n";
 			}
 		}
 
 		for(int m = 0; m < H; m++){
+			f1 << m << " : ";
+			
 			if (array_Y[m] < 16) {
 				f1 << std::hex << 0;
 				f1 << std::hex << array_Y[m];
@@ -145,7 +147,7 @@ int main() {
 				f2 << std::hex << 0;
 				f2 << std::hex << 0;
 			}
-			f1 << "\n";
+			f1 << ";\n";
 			f2 << "\n";
 			/*
 			if (val == 0) f << "0";
@@ -166,10 +168,9 @@ int main() {
 			if (val == 15) f << "F";
 			*/
 			//}
-			//f << "\n";
-			//f1 << "\n";
-			//f2 << "\n";
+			
 		}
+		
 		f2 << std::hex << 0;
 		f2 << std::hex << 0;
 		f2 << std::hex << 0;
@@ -182,11 +183,14 @@ int main() {
 		{
 			f2 << std::hex << 0;
 		}
+		//f << "\n";
+		//f1 << "\n";
+		f2 << "\n";
+		f << "END;";
+		f1 << "END;";
+		//f2 << "END;";
 	}
 
 	
-	/*f  << "END;";
-	f1 << "END;";
-	f2 << "END;";*/
 	//}
 

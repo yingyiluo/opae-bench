@@ -1,0 +1,8 @@
+cci_mpf_neural_net.json
+
+C:../../../base/hw/rtl/base_sources.txt
+
++incdir+.
+Neural_net.vhd
+Neural_top.vhd
+cci_mpf_neural_net_afu.sv

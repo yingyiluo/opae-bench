@@ -1,0 +1,8 @@
+cci_mpf_matrix_multi.json
+
+C:../../../base/hw/rtl/base_sources.txt
+
++incdir+.
+Multi.vhd
+Multi_top.vhd
+cci_mpf_matrix_multi_afu.sv
