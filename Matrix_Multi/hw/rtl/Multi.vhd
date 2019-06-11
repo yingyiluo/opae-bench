@@ -97,7 +97,7 @@ variable Mul,Sum,M_dout  : integer;
 		     end loop;
 			M_dout := Sum;
 			Mout(x + 8*y) <= M_dout;
-			z_din <= std_logic_vector(to_unsigned(Mout(x + 8*y), 32));
+			z_din <= std_logic_vector(to_unsigned(M_dout, 32));
 			z_wr_en <= '1';
 			x_c <= x + 1;
 			if (x = (W -1) ) then
@@ -108,7 +108,7 @@ variable Mul,Sum,M_dout  : integer;
 				done_c <= '1';
 				x_c <= 0;
 				y_c <= 0;
-				next_state <= s3;
+				next_state <= s0;
 			end if;
 		     end if;
 		

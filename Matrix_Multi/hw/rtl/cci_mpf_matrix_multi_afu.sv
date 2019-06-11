@@ -142,6 +142,7 @@ module app_afu
     {
         STATE_IDLE,
         STATE_RUN,
+        STATE_READ,
         STATE_FINISH
     }
     t_state;
@@ -180,14 +181,22 @@ module app_afu
             // as long as the request channel is not full.
             STATE_RUN:
             begin
-		z_rd_addr <= z_rd_addr + 6'b1;
-		$display("z_dout: 0x%x, z_rd_addr: 0x%x", z_dout, z_rd_addr);
                 if(done == 1'b1)
+                begin
+                    state <= STATE_READ;
+                end
+            end
+  
+            STATE_READ:
+            begin 
+		$display("z_dout: 0x%x, z_rd_addr: 0x%x", z_dout, z_rd_addr);
+                if(z_rd_addr == 'd63)
                 begin
                     state <= STATE_FINISH;
                 end
+		z_rd_addr <= z_rd_addr + 6'b1;
             end
-   
+
             STATE_FINISH:
             begin
                 if(!fiu.c1TxAlmFull)
