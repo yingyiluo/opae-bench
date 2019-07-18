@@ -110,6 +110,7 @@ module app_afu
     logic[5:0] z_rd_addr = 6'b000000;
     logic[5:0] z_wr_addr = 6'b000000;
     logic z_wr_en = 1'h0;
+    //logic[4:0] counter = 'd0;
 
     Multi_top Multi_top_inst(
         .clock(clk),
@@ -119,15 +120,6 @@ module app_afu
 	.z_rd_addr(z_rd_addr),
 	.z_dout(z_dout)
     );
-
-//    always_ff @(posedge clk)
-//    begin
-//        if(reset)
-//        begin
-//            start = 1'b0;
-//        end
-//        start = 1'b1;
-//    end
 
     // =========================================================================
     //
@@ -142,7 +134,7 @@ module app_afu
     {
         STATE_IDLE,
         STATE_RUN,
-        STATE_READ,
+        //STATE_READ,
         STATE_FINISH
     }
     t_state;
@@ -170,6 +162,7 @@ module app_afu
                 if (is_mem_addr_csr_write)
                 begin
                     z_rd_addr <= 6'b0;
+                    //counter <= 'd0;
                     start <= 1'b1;
                     state <= STATE_RUN;
                     $display("AFU running...");
@@ -183,10 +176,17 @@ module app_afu
             begin
                 if(done == 1'b1)
                 begin
-                    state <= STATE_READ;
+                    //counter <= counter + 1;
+                    state <= STATE_FINISH;
                 end
+/*
+                if(counter == 'd10)
+                begin
+                    state <= STATE_FINISH;
+                end
+*/
             end
-  
+ /* 
             STATE_READ:
             begin 
 		$display("z_dout: 0x%x, z_rd_addr: 0x%x", z_dout, z_rd_addr);
@@ -196,7 +196,7 @@ module app_afu
                 end
 		z_rd_addr <= z_rd_addr + 6'b1;
             end
-
+*/
             STATE_FINISH:
             begin
                 if(!fiu.c1TxAlmFull)

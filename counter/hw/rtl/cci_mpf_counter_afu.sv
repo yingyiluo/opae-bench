@@ -140,9 +140,9 @@ module app_afu
             begin
                 if (is_mem_addr_csr_write)
                 begin
-                    $display("idle: counter: 0x%x", counter);
+                    //$display("idle: counter: 0x%x", counter);
                     state <= STATE_RUN;
-                    $display("AFU running...");
+                    //$display("AFU running...");
                 end
             end
 
@@ -152,7 +152,7 @@ module app_afu
             STATE_RUN:
             begin
                 counter <= counter + 32'h1;
-                $display("run: counter: 0x%x", counter);
+                //$display("run: counter: 0x%x", counter);
                 if(counter == 32'h3fe)
                 begin
                     state <= STATE_FINISH;
@@ -164,8 +164,8 @@ module app_afu
                 if(!fiu.c1TxAlmFull)
                 begin
                     state <= STATE_IDLE;
-                    $display("AFU done..., counter: 0x%x", counter);
-                    $display("ccip data: 0x%x", t_ccip_clData'(counter));
+                    //$display("AFU done..., counter: 0x%x", counter);
+                    //$display("ccip data: 0x%x", t_ccip_clData'(counter));
                 end
             end
           endcase

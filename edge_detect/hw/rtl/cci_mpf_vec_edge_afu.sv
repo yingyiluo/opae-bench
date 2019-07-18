@@ -143,7 +143,7 @@ module app_afu
         begin
             state <= STATE_IDLE;
             start <= 1'b0;
-            counter <= 32'h0;
+            //counter <= 32'h0;
         end
         else
         begin
@@ -167,16 +167,19 @@ module app_afu
             // as long as the request channel is not full.
             STATE_RUN:
             begin
-		z_rd_addr <= z_rd_addr + 6'b1;
+		//z_rd_addr <= z_rd_addr + 6'b1;
 		//$display("z_dout: 0x%x, z_rd_addr: 0x%x", z_dout, z_rd_addr);
                 if(done == 1'b1)
                 begin
+                    state <= STATE_FINISH;
+                    /*
                     counter <= counter + 32'b1;
                     $display("counter: %d", counter);
                     if(counter == 32'h4) 
                     begin 
                         state <= STATE_FINISH;
                     end
+                    */
                 end
             end
    

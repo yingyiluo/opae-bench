@@ -54,36 +54,37 @@ int main(int argc, char *argv[])
 
     // Connect the CSR manager
     CSR_MGR csrs(fpga);
-
-    // Allocate a single page memory buffer
-    auto buf_handle = fpga.allocBuffer(getpagesize());
-    auto buf = reinterpret_cast<volatile char*>(buf_handle->c_type());
-    uint64_t buf_pa = buf_handle->io_address();
-    assert(NULL != buf);
-    printf("allocated a buffer\n");
-
-    // Set the low byte of the shared buffer to 0.  The FPGA will write
-    // a non-zero value to it.
-    buf[0] = 0;
-
-    // Tell the accelerator the address of the buffer using cache line
-    // addresses by writing to application CSR 0.  The CSR manager maps
-    // its registers to MMIO space.  The accelerator will respond by
-    // writing to the buffer.
-    csrs.writeCSR(0, buf_pa / CL(1));
-
-    struct timespec pause;
-    pause.tv_sec = (fpga.hwIsSimulated() ? 1 : 0);
-    pause.tv_nsec = 2500000;
-
     double start = getCurrentTimestamp();
-    // Spin, waiting for the value in memory to change to something non-zero.
-    while (0 == buf[0])
-    {
-        nanosleep(&pause, NULL);
-        // A well-behaved program would use _mm_pause(), nanosleep() or
-        // equivalent to save power here.
-    };
+    for(int i = 0; i < 10; i++) {
+	    // Allocate a single page memory buffer
+	    auto buf_handle = fpga.allocBuffer(getpagesize());
+	    auto buf = reinterpret_cast<volatile char*>(buf_handle->c_type());
+	    uint64_t buf_pa = buf_handle->io_address();
+	    assert(NULL != buf);
+	    printf("allocated a buffer\n");
+
+	    // Set the low byte of the shared buffer to 0.  The FPGA will write
+	    // a non-zero value to it.
+	    buf[0] = 0;
+
+	    // Tell the accelerator the address of the buffer using cache line
+	    // addresses by writing to application CSR 0.  The CSR manager maps
+	    // its registers to MMIO space.  The accelerator will respond by
+	    // writing to the buffer.
+	    csrs.writeCSR(0, buf_pa / CL(1));
+
+	    struct timespec pause;
+	    pause.tv_sec = (fpga.hwIsSimulated() ? 1 : 0);
+	    pause.tv_nsec = 2500000;
+
+	    // Spin, waiting for the value in memory to change to something non-zero.
+	    while (0 == buf[0])
+	    {
+		nanosleep(&pause, NULL);
+		// A well-behaved program would use _mm_pause(), nanosleep() or
+		// equivalent to save power here.
+	    };
+    }
     double end = getCurrentTimestamp();
     cout << "Program finished" << endl;
     cout << "Runtime: " << (end - start)*1E3 << " ms" << endl;

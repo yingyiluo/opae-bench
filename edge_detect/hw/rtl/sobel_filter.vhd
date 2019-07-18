@@ -121,7 +121,7 @@ when s2 =>
 when s3 =>
 	r_wr_en <= '1';
 	r_wr_addr <= i;
-	i_n <= std_logic_vector(unsigned(i) + to_unsigned(1,i'length));
+	i_n <= std_logic_vector(to_unsigned(to_integer(unsigned(i) + to_unsigned(1,i'length)), 19));
 
 	count_c <= count + 1;
 	if(count < COL or ((count mod COL) = 0) or ((count mod COL) = (COL - 1)) or (count > (N - COL))) then

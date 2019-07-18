@@ -42,7 +42,7 @@ architecture behavior of Neural_net is
      
 begin
 Neural_fsm_process : 
-        process(state, y_dout, x_dout, i, j, done_o, start)
+        process(state, y_dout, x_dout, x, y, i, j, done_o, start)
 
 variable Mul,Sum,M_dout,temp_out  : integer;
 	begin
@@ -139,6 +139,7 @@ variable Mul,Sum,M_dout,temp_out  : integer;
 			done_c <= '1';
 			x_c <= 0;
 			y_c <= 0;
+			next_state <= s0;
 			
 		     end if;
 		

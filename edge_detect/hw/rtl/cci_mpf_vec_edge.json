@@ -11,7 +11,7 @@
                      "class": "cci-p",
                      "params":
                         {
-                           "clock": "pClkDiv2"
+                           "clock": "pClk"
                         }
                   }
                ]
@@ -21,7 +21,7 @@
             {
                "name": "cci_mpf_vec_edge",
                "total-contexts": 1,
-               "accelerator-type-uuid": "753cb06d-50d6-480b-b83d-2b833ac30e12"
+               "accelerator-type-uuid": "2fa5d1d4-46cb-4d0a-a333-6bcf84ea4d5e"
             }
          ]
    }

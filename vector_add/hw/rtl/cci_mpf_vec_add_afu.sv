@@ -158,7 +158,7 @@ module app_afu
                     z_rd_addr <= 6'b0;
                     start <= 1'b1;
                     state <= STATE_RUN;
-                    $display("AFU running...");
+                    //$display("AFU running...");
                 end
             end
 
@@ -172,7 +172,7 @@ module app_afu
                 if(done == 1'b1)
                 begin
                     counter <= counter + 32'b1;
-                    $display("counter: %d", counter);
+                    //$display("counter: %d", counter);
                     if(counter == 32'h4) 
                     begin 
                         state <= STATE_FINISH;
@@ -185,7 +185,7 @@ module app_afu
                 if(!fiu.c1TxAlmFull)
                 begin
                     state <= STATE_IDLE;
-                    $display("AFU done..., out: 0x%x", z_dout);
+                    //$display("AFU done..., out: 0x%x", z_dout);
                     //$display("ccip data: 0x%x", t_ccip_clData'(z_dout));
                 end
             end

@@ -107,9 +107,10 @@ module app_afu
     logic[5:0] y_rd_addr = 6'b000000;
     logic[31:0] z_din = 32'h0000000;
     logic[31:0] z_dout = 32'h000000;
-    logic[5:0] z_rd_addr = 6'b000000;
+    logic[5:0] z_rd_addr = 6'd0;
     logic[5:0] z_wr_addr = 6'b000000;
     logic z_wr_en = 1'h0;
+    logic[4:0] counter = 'd0;
 
     Neural_top Neural_top_inst(
         .clock(clk),
@@ -142,6 +143,8 @@ module app_afu
     {
         STATE_IDLE,
         STATE_RUN,
+        //STATE_WAIT,
+        //STATE_READ,
         STATE_FINISH
     }
     t_state;
@@ -168,7 +171,7 @@ module app_afu
             begin
                 if (is_mem_addr_csr_write)
                 begin
-                    z_rd_addr <= 6'b0;
+                    //z_rd_addr <= 'd8;
                     start <= 1'b1;
                     state <= STATE_RUN;
                     $display("AFU running...");
@@ -180,14 +183,53 @@ module app_afu
             // as long as the request channel is not full.
             STATE_RUN:
             begin
-		z_rd_addr <= z_rd_addr + 6'b1;
-		$display("z_dout: 0x%x, z_rd_addr: 0x%x", z_dout, z_rd_addr);
                 if(done == 1'b1)
+                begin
+                    //counter <= counter + 1;
+                    state <= STATE_FINISH;
+                end
+/*
+                if(counter == 'd10)
                 begin
                     state <= STATE_FINISH;
                 end
+                else
+                begin
+                    $display("next_iteration");
+                    state <= STATE_IDLE;
+                end
+*/
             end
-   
+  /* 
+            STATE_READ:
+            begin 
+		$display("z_dout: 0x%x, z_rd_addr: 0x%x", z_dout, z_rd_addr);
+                if(z_rd_addr == 'd8)
+                begin
+                    state <= STATE_FINISH;
+                end
+                else
+                begin
+                    state <= STATE_WAIT;
+                end
+            end
+
+            STATE_WAIT:
+            begin
+                if(counter == 'd1)
+                begin
+                    state <= STATE_READ;
+                    counter <= 'd0;
+                end
+                else
+                begin
+		    z_rd_addr <= z_rd_addr + 6'b1;
+                    state <= STATE_WAIT;
+                    counter <= counter + 'd1;
+                end
+                    
+            end
+*/
             STATE_FINISH:
             begin
                 if(!fiu.c1TxAlmFull)

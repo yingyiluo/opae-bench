@@ -193,7 +193,8 @@ module app_afu
             begin
 		$display("z_dout: 0x%x, z_rd_addr: 0x%x, done: %b", z_dout, z_rd_addr, done);
 
-                if(done == 1'b1 && z_rd_addr == 'hf2f)
+                //if(done == 1'b1 && z_rd_addr == 'hf2f)
+                if(done == 1'b1)
                 begin
                     //$display("counter: %d", counter);
                     // if(counter == 32'h0) 
